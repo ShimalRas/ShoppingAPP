@@ -333,6 +333,58 @@ nav ul li a.active::after {
     margin: 0;
 }
 
+/* Category Page Specific Styles */
+.category-hero {
+    height: 300px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://via.placeholder.com/1920x300');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.category-section {
+    padding: 40px 5%;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.category-section:nth-child(odd) {
+    background-color: var(--dark-color);
+}
+
+.category-section:nth-child(even) {
+    background-color: var(--dark-secondary);
+}
+
+.category-section h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    position: relative;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.category-section h2::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 2px;
+    background-color: var(--primary-color);
+    bottom: 0;
+    left: 0;
+}
+
+.category-description {
+    margin-bottom: 30px;
+    color: var(--gray-color);
+    max-width: 800px;
+}
+
 /* Footer */
 footer {
     background-color: var(--dark-secondary);
