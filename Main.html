@@ -3,9 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>TechGear Shop</title>
+    <link rel="stylesheet" href="Main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    
+    <header>
+        <div class="logo">
+            <h1>TechGear</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Categories <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="#">Keyboards</a>
+                        <a href="#">Mice</a>
+                        <a href="#">Monitors</a>
+                        <a href="#">Headphones</a>
+                    </div>
+                </li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="cart">
+            <a href="#"><i class="fas fa-shopping-cart"></i> Cart (0)</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Premium Tech Products</h2>
+            <p>Find the perfect gear for your setup</p>
+            <button class="btn">Shop Now</button>
+        </div>
+    </section>
+
+    <section class="featured-products">
+        <h2>Featured Products</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/300x200" alt="Mechanical Keyboard">
+                </div>
+                <div class="product-info">
+                    <h3>Mechanical Keyboard</h3>
+                    <p class="product-description">RGB Backlit Mechanical Gaming Keyboard with Blue Switches</p>
+                    <p class="product-price">$89.99</p>
+                    <button class="btn-add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/300x200" alt="Gaming Mouse">
+                </div>
+                <div class="product-info">
+                    <h3>Gaming Mouse</h3>
+                    <p class="product-description">Wireless Gaming Mouse with 16,000 DPI and RGB Lighting</p>
+                    <p class="product-price">$59.99</p>
+                    <button class="btn-add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/300x200" alt="Gaming Headset">
+                </div>
+                <div class="product-info">
+                    <h3>Gaming Headset</h3>
+                    <p class="product-description">Surround Sound Gaming Headset with Noise Cancelling Microphone</p>
+                    <p class="product-price">$79.99</p>
+                    <button class="btn-add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/300x200" alt="Gaming Monitor">
+                </div>
+                <div class="product-info">
+                    <h3>Gaming Monitor</h3>
+                    <p class="product-description">27-inch 144Hz Gaming Monitor with 1ms Response Time</p>
+                    <p class="product-price">$249.99</p>
+                    <button class="btn-add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="categories">
+        <h2>Shop by Category</h2>
+        <div class="category-grid">
+            <div class="category-card">
+                <img src="https://via.placeholder.com/200x150" alt="Keyboards">
+                <h3>Keyboards</h3>
+            </div>
+            <div class="category-card">
+                <img src="https://via.placeholder.com/200x150" alt="Mice">
+                <h3>Mice</h3>
+            </div>
+            <div class="category-card">
+                <img src="https://via.placeholder.com/200x150" alt="Monitors">
+                <h3>Monitors</h3>
+            </div>
+            <div class="category-card">
+                <img src="https://via.placeholder.com/200x150" alt="Headphones">
+                <h3>Headphones</h3>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>TechGear</h3>
+                <p>Your one-stop shop for premium tech products and accessories.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Products</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Tech Street, Digital City</p>
+                <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+                <p><i class="fas fa-envelope"></i> info@techgear.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 TechGear. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
