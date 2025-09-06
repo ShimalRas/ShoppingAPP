@@ -24,7 +24,98 @@
                         }
                     });
                 });
+            
+            // Set up product modal functionality
+            setupProductModal();
         });
+        
+        // Function to handle product modal
+        function setupProductModal() {
+            // Get all product cards
+            const productCards = document.querySelectorAll('.product-card');
+            const modal = document.getElementById('product-modal');
+            const modalClose = document.querySelector('.modal-close');
+            const modalContent = document.querySelector('.modal-content');
+            
+            // Add click event to each product card
+            productCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Prevent triggering when clicking add to cart button
+                    if (e.target.classList.contains('btn-add-to-cart')) {
+                        return;
+                    }
+                    
+                    // Get product details
+                    const productImage = card.querySelector('.product-image img').src;
+                    const productName = card.querySelector('h3').textContent;
+                    const productDescription = card.querySelector('.product-description').textContent;
+                    const productPrice = card.querySelector('.product-price').textContent;
+                    
+                    // Populate modal with product details
+                    document.getElementById('modal-product-image').src = productImage;
+                    document.getElementById('modal-product-name').textContent = productName;
+                    document.getElementById('modal-product-description').textContent = productDescription;
+                    document.getElementById('modal-product-price').textContent = productPrice;
+                    
+                    // Show modal
+                    modal.style.display = 'block';
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling
+                });
+            });
+            
+            // Close modal when clicking X button
+            modalClose.addEventListener('click', function() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Enable scrolling
+            });
+            
+            // Close modal when clicking outside modal content
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto'; // Enable scrolling
+                }
+            });
+            
+            // Tab functionality
+            const tabHeader = document.querySelectorAll('.tab-header div');
+            const tabContent = document.querySelectorAll('.tab-body');
+            
+            tabHeader.forEach((tab, index) => {
+                tab.addEventListener('click', function() {
+                    tabHeader.forEach(item => item.classList.remove('active'));
+                    tabContent.forEach(item => item.classList.remove('active'));
+                    
+                    tab.classList.add('active');
+                    tabContent[index].classList.add('active');
+                });
+            });
+            
+            // Quantity selector functionality
+            const quantityPlus = document.querySelector('.quantity-btn.plus');
+            const quantityMinus = document.querySelector('.quantity-btn.minus');
+            const quantityInput = document.querySelector('.quantity-input');
+            
+            quantityPlus.addEventListener('click', function() {
+                let value = parseInt(quantityInput.value);
+                if (value < parseInt(quantityInput.max)) {
+                    quantityInput.value = value + 1;
+                }
+            });
+            
+            quantityMinus.addEventListener('click', function() {
+                let value = parseInt(quantityInput.value);
+                if (value > parseInt(quantityInput.min)) {
+                    quantityInput.value = value - 1;
+                }
+            });
+            
+            // Modal Add to Cart button
+            const modalAddToCartBtn = document.querySelector('.modal-add-to-cart');
+            modalAddToCartBtn.addEventListener('click', function() {
+                alert('Product added to cart!');
+            });
+        }
     </script>
 </head>
 <body>
@@ -120,8 +211,8 @@
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Products</a></li>
+                    <li><a href="Main.html">Home</a></li>
+                    <li><a href="Categories.html">Products</a></li>
                     <li><a href="#">About Us</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
@@ -146,5 +237,82 @@
             <p>&copy; 2025 TechGear. All rights reserved.</p>
         </div>
     </footer>
+    
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-product">
+                <div class="modal-product-image">
+                    <img id="modal-product-image" src="" alt="Product Image">
+                </div>
+                <div class="modal-product-details">
+                    <h2 id="modal-product-name"></h2>
+                    <p id="modal-product-description" class="modal-description"></p>
+                    <p id="modal-product-price" class="modal-price"></p>
+                    
+                    <div class="product-specs">
+                        <h3>Specifications</h3>
+                        <ul>
+                            <li><strong>Brand:</strong> <span>TechGear</span></li>
+                            <li><strong>Model:</strong> <span>Premium Series</span></li>
+                            <li><strong>Warranty:</strong> <span>2 Years</span></li>
+                            <li><strong>Shipping:</strong> <span>Free</span></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="product-actions">
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus">-</button>
+                            <input type="number" value="1" min="1" max="10" class="quantity-input">
+                            <button class="quantity-btn plus">+</button>
+                        </div>
+                        <button class="btn modal-add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-additional-info">
+                <div class="tabs">
+                    <div class="tab-header">
+                        <div class="active">Description</div>
+                        <div>Features</div>
+                        <div>Reviews</div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-body active">
+                            <p>This premium product is designed with the highest quality materials to deliver exceptional performance. Perfect for both casual users and professionals who demand the best.</p>
+                            <p>Experience unparalleled quality and performance with our cutting-edge technology and sleek design.</p>
+                        </div>
+                        <div class="tab-body">
+                            <ul>
+                                <li>Premium build quality with durable materials</li>
+                                <li>Ergonomic design for extended comfort</li>
+                                <li>Advanced technology for superior performance</li>
+                                <li>Energy efficient and environmentally friendly</li>
+                                <li>Sleek and modern aesthetic that fits any setup</li>
+                            </ul>
+                        </div>
+                        <div class="tab-body">
+                            <div class="review">
+                                <div class="review-header">
+                                    <span class="reviewer">John D.</span>
+                                    <div class="stars">★★★★★</div>
+                                </div>
+                                <p>Absolutely love this product! The quality is exceptional and it performs exactly as advertised.</p>
+                            </div>
+                            <div class="review">
+                                <div class="review-header">
+                                    <span class="reviewer">Sarah M.</span>
+                                    <div class="stars">★★★★☆</div>
+                                </div>
+                                <p>Great product overall. Shipping was quick and the performance is excellent.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
