@@ -6,117 +6,9 @@
     <title>TechGear Shop</title>
     <link rel="stylesheet" href="Main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script>
-        // Function to include header
-        window.addEventListener('DOMContentLoaded', function() {
-            fetch('header.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('header-placeholder').innerHTML = data;
-                    
-                    // Update active nav link
-                    const navLinks = document.querySelectorAll('nav ul li a');
-                    navLinks.forEach(link => {
-                        if(link.getAttribute('href') === 'Main.html') {
-                            link.classList.add('active');
-                        } else {
-                            link.classList.remove('active');
-                        }
-                    });
-                });
-            
-            // Set up product modal functionality
-            setupProductModal();
-        });
-        
-        // Function to handle product modal
-        function setupProductModal() {
-            // Get all product cards
-            const productCards = document.querySelectorAll('.product-card');
-            const modal = document.getElementById('product-modal');
-            const modalClose = document.querySelector('.modal-close');
-            const modalContent = document.querySelector('.modal-content');
-            
-            // Add click event to each product card
-            productCards.forEach(card => {
-                card.addEventListener('click', function(e) {
-                    // Prevent triggering when clicking add to cart button
-                    if (e.target.classList.contains('btn-add-to-cart')) {
-                        return;
-                    }
-                    
-                    // Get product details
-                    const productImage = card.querySelector('.product-image img').src;
-                    const productName = card.querySelector('h3').textContent;
-                    const productDescription = card.querySelector('.product-description').textContent;
-                    const productPrice = card.querySelector('.product-price').textContent;
-                    
-                    // Populate modal with product details
-                    document.getElementById('modal-product-image').src = productImage;
-                    document.getElementById('modal-product-name').textContent = productName;
-                    document.getElementById('modal-product-description').textContent = productDescription;
-                    document.getElementById('modal-product-price').textContent = productPrice;
-                    
-                    // Show modal
-                    modal.style.display = 'block';
-                    document.body.style.overflow = 'hidden'; // Prevent scrolling
-                });
-            });
-            
-            // Close modal when clicking X button
-            modalClose.addEventListener('click', function() {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto'; // Enable scrolling
-            });
-            
-            // Close modal when clicking outside modal content
-            window.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                    document.body.style.overflow = 'auto'; // Enable scrolling
-                }
-            });
-            
-            // Tab functionality
-            const tabHeader = document.querySelectorAll('.tab-header div');
-            const tabContent = document.querySelectorAll('.tab-body');
-            
-            tabHeader.forEach((tab, index) => {
-                tab.addEventListener('click', function() {
-                    tabHeader.forEach(item => item.classList.remove('active'));
-                    tabContent.forEach(item => item.classList.remove('active'));
-                    
-                    tab.classList.add('active');
-                    tabContent[index].classList.add('active');
-                });
-            });
-            
-            // Quantity selector functionality
-            const quantityPlus = document.querySelector('.quantity-btn.plus');
-            const quantityMinus = document.querySelector('.quantity-btn.minus');
-            const quantityInput = document.querySelector('.quantity-input');
-            
-            quantityPlus.addEventListener('click', function() {
-                let value = parseInt(quantityInput.value);
-                if (value < parseInt(quantityInput.max)) {
-                    quantityInput.value = value + 1;
-                }
-            });
-            
-            quantityMinus.addEventListener('click', function() {
-                let value = parseInt(quantityInput.value);
-                if (value > parseInt(quantityInput.min)) {
-                    quantityInput.value = value - 1;
-                }
-            });
-            
-            // Modal Add to Cart button
-            const modalAddToCartBtn = document.querySelector('.modal-add-to-cart');
-            modalAddToCartBtn.addEventListener('click', function() {
-                alert('Product added to cart!');
-            });
-        }
-    </script>
+    <script src="products.js" defer></script>
+    <script src="cart.js" defer></script>
+    <script src="main.js" defer></script>
 </head>
 <body>
     <!-- Header placeholder -->
@@ -133,54 +25,7 @@
     <section class="featured-products">
         <h2>Featured Products</h2>
         <div class="product-grid">
-            <!-- Keyboard (k1) -->
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="images/k1.jpg" alt="Mechanical Keyboard">
-                </div>
-                <div class="product-info">
-                    <h3>Mechanical Keyboard</h3>
-                    <p class="product-description">RGB Backlit Mechanical Gaming Keyboard with Blue Switches</p>
-                    <p class="product-price">$89.99</p>
-                    <button class="btn-add-to-cart">Add to Cart</button>
-                </div>
-            </div>
-            <!-- Mouse (m1-cyberpunk) - Limited Edition Highlighted -->
-            <div class="product-card" style="border:2px solid #ff1a1a; box-shadow:0 0 15px #ff1a1a;">
-                <div class="product-image">
-                    <img src="images/m1-cyberpunk.jpg" alt="Cyberpunk Edition Mouse">
-                </div>
-                <div class="product-info">
-                    <h3>Cyberpunk Edition Mouse <span style="color:#ff1a1a;font-size:14px;">(Limited Edition)</span></h3>
-                    <p class="product-description">Exclusive Cyberpunk RGB Wireless Gaming Mouse – Only while stocks last!</p>
-                    <p class="product-price">$129.99</p>
-                    <button class="btn-add-to-cart">Add to Cart</button>
-                </div>
-            </div>
-            <!-- Headset (k3) -->
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="images/k3.jpg" alt="Gaming Headset">
-                </div>
-                <div class="product-info">
-                    <h3>Gaming Headset</h3>
-                    <p class="product-description">Surround Sound Gaming Headset with Noise Cancelling Microphone</p>
-                    <p class="product-price">$79.99</p>
-                    <button class="btn-add-to-cart">Add to Cart</button>
-                </div>
-            </div>
-            <!-- Monitor (k4) -->
-            <div class="product-card">
-                <div class="product-image">
-                    <img src="images/mn1.jpg" alt="Gaming Monitor">
-                </div>
-                <div class="product-info">
-                    <h3>Gaming Monitor</h3>
-                    <p class="product-description">27-inch 144Hz Gaming Monitor with 1ms Response Time</p>
-                    <p class="product-price">$299.99</p>
-                    <button class="btn-add-to-cart">Add to Cart</button>
-                </div>
-            </div>
+            <!-- Products will be dynamically loaded here -->
         </div>
     </section>
 

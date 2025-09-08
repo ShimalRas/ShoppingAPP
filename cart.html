@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - TechGear</title>
+    <link rel="stylesheet" href="Main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="products.js" defer></script>
+    <script src="main.js" defer></script>
+    <script src="cart.js" defer></script>
+</head>
+<body class="cart-page">
+    <!-- Header placeholder -->
+    <div id="header-placeholder"></div>
+
+    <main class="cart-page-container">
+        <h1>Your Shopping Cart</h1>
+        <div class="cart-layout">
+            <div class="cart-items-list">
+                <!-- Cart items will be dynamically loaded here -->
+            </div>
+            <div class="cart-summary">
+                <h2>Summary</h2>
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="summary-subtotal">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span id="summary-shipping">Free</span>
+                </div>
+                <div class="summary-row">
+                    <span>Tax (7%)</span>
+                    <span id="summary-tax">$0.00</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span id="summary-total">$0.00</span>
+                </div>
+                <button class="btn checkout-btn">Proceed to Checkout</button>
+                <button class="btn continue-shopping" style="background: var(--dark-secondary); margin-top: 10px;">Continue Shopping</button>
+            </div>
+        </div>
+        
+        <div class="empty-cart-message" style="display: none;">
+            <div class="empty-cart-content">
+                <i class="fas fa-shopping-cart fa-4x"></i>
+                <h2>Your cart is empty</h2>
+                <p>Looks like you haven't added any products to your cart yet.</p>
+                <a href="Main.html" class="btn">Start Shopping</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>TechGear</h3>
+                <p>Your one-stop shop for premium tech products and accessories.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="Main.html">Home</a></li>
+                    <li><a href="Categories.html">Products</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Tech Street, Digital City</p>
+                <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+                <p><i class="fas fa-envelope"></i> info@techgear.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 TechGear. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

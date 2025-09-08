@@ -6,116 +6,11 @@
     <title>TechGear - Product Categories</title>
     <link rel="stylesheet" href="Main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="products.js" defer></script>
+    <script src="cart.js" defer></script>
+    <script src="main.js" defer></script>
     <script>
-        // Function to include header
-        window.addEventListener('DOMContentLoaded', function() {
-            fetch('header.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('header-placeholder').innerHTML = data;
-                    
-                    // Update active nav link
-                    const navLinks = document.querySelectorAll('nav ul li a');
-                    navLinks.forEach(link => {
-                        if(link.getAttribute('href') === 'Categories.html') {
-                            link.classList.add('active');
-                        } else {
-                            link.classList.remove('active');
-                        }
-                    });
-                });
-                
-            // Set up product modal functionality
-            setupProductModal();
-        });
-        
-        // Function to handle product modal
-        function setupProductModal() {
-            // Get all product cards
-            const productCards = document.querySelectorAll('.product-card');
-            const modal = document.getElementById('product-modal');
-            const modalClose = document.querySelector('.modal-close');
-            const modalContent = document.querySelector('.modal-content');
-            
-            // Add click event to each product card
-            productCards.forEach(card => {
-                card.addEventListener('click', function(e) {
-                    // Prevent triggering when clicking add to cart button
-                    if (e.target.classList.contains('btn-add-to-cart')) {
-                        return;
-                    }
-                    
-                    // Get product details
-                    const productImage = card.querySelector('.product-image img').src;
-                    const productName = card.querySelector('h3').textContent;
-                    const productDescription = card.querySelector('.product-description').textContent;
-                    const productPrice = card.querySelector('.product-price').textContent;
-                    
-                    // Populate modal with product details
-                    document.getElementById('modal-product-image').src = productImage;
-                    document.getElementById('modal-product-name').textContent = productName;
-                    document.getElementById('modal-product-description').textContent = productDescription;
-                    document.getElementById('modal-product-price').textContent = productPrice;
-                    
-                    // Show modal
-                    modal.style.display = 'block';
-                    document.body.style.overflow = 'hidden'; // Prevent scrolling
-                });
-            });
-            
-            // Close modal when clicking X button
-            modalClose.addEventListener('click', function() {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto'; // Enable scrolling
-            });
-            
-            // Close modal when clicking outside modal content
-            window.addEventListener('click', function(e) {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                    document.body.style.overflow = 'auto'; // Enable scrolling
-                }
-            });
-            
-            // Tab functionality
-            const tabHeader = document.querySelectorAll('.tab-header div');
-            const tabContent = document.querySelectorAll('.tab-body');
-            
-            tabHeader.forEach((tab, index) => {
-                tab.addEventListener('click', function() {
-                    tabHeader.forEach(item => item.classList.remove('active'));
-                    tabContent.forEach(item => item.classList.remove('active'));
-                    
-                    tab.classList.add('active');
-                    tabContent[index].classList.add('active');
-                });
-            });
-            
-            // Quantity selector functionality
-            const quantityPlus = document.querySelector('.quantity-btn.plus');
-            const quantityMinus = document.querySelector('.quantity-btn.minus');
-            const quantityInput = document.querySelector('.quantity-input');
-            
-            quantityPlus.addEventListener('click', function() {
-                let value = parseInt(quantityInput.value);
-                if (value < parseInt(quantityInput.max)) {
-                    quantityInput.value = value + 1;
-                }
-            });
-            
-            quantityMinus.addEventListener('click', function() {
-                let value = parseInt(quantityInput.value);
-                if (value > parseInt(quantityInput.min)) {
-                    quantityInput.value = value - 1;
-                }
-            });
-            
-            // Modal Add to Cart button
-            const modalAddToCartBtn = document.querySelector('.modal-add-to-cart');
-            modalAddToCartBtn.addEventListener('click', function() {
-                alert('Product added to cart!');
-            });
-        }
+        // This file now uses main.js for most functionality
     </script>
 </head>
 <body>
@@ -136,7 +31,7 @@
             <p>Discover our selection of premium mechanical keyboards, perfect for gaming and productivity.</p>
         </div>
         <div class="product-grid">
-            <div class="product-card">
+            <div class="product-card" data-product-id="k1">
                 <div class="product-image">
                     <img src="images/k1.jpg" alt="Mechanical Gaming Keyboard">
                 </div>
@@ -147,7 +42,7 @@
                     <button class="btn-add-to-cart">Add to Cart</button>
                 </div>
             </div>
-            <div class="product-card">
+            <div class="product-card" data-product-id="k2">
                 <div class="product-image">
                     <img src="images/k2.jpg" alt="Wireless Keyboard">
                 </div>
@@ -158,7 +53,7 @@
                     <button class="btn-add-to-cart">Add to Cart</button>
                 </div>
             </div>
-            <div class="product-card">
+            <div class="product-card" data-product-id="k3">
                 <div class="product-image">
                     <img src="images/k3.jpg" alt="Compact Keyboard">
                 </div>
@@ -169,7 +64,7 @@
                     <button class="btn-add-to-cart">Add to Cart</button>
                 </div>
             </div>
-            <div class="product-card">
+            <div class="product-card" data-product-id="k4">
                 <div class="product-image">
                     <img src="images/k4.jpg" alt="Premium Keyboard">
                 </div>
@@ -180,7 +75,7 @@
                     <button class="btn-add-to-cart">Add to Cart</button>
                 </div>
             </div>
-            <div class="product-card">
+            <div class="product-card" data-product-id="k5">
                 <div class="product-image">
                     <img src="images/k5.jpg" alt="Silent Keyboard">
                 </div>
@@ -201,7 +96,7 @@
             <p>Find the perfect gaming and productivity mice with precision sensors and ergonomic designs.</p>
         </div>
         <div class="product-grid">
-            <div class="product-card" style="border: 2px solid #ff1a1a; box-shadow: 0 0 15px #ff1a1a;">
+            <div class="product-card" data-product-id="m1" style="border: 2px solid #ff1a1a; box-shadow: 0 0 15px #ff1a1a;">
                 <div class="product-image">
                     <img src="images/m1-cyberpunk.jpg" alt="Cyberpunk Limited Edition Mouse">
                 </div>
@@ -212,7 +107,7 @@
                     <button class="btn-add-to-cart">Add to Cart</button>
                 </div>
             </div>
-            <div class="product-card">
+            <div class="product-card" data-product-id="m2">
                 <div class="product-image">
                     <img src="images/m2.jpg" alt="Wireless Gaming Mouse">
                 </div>
@@ -223,7 +118,7 @@
                     <button class="btn-add-to-cart">Add to Cart</button>
                 </div>
             </div>
-            <div class="product-card">
+            <div class="product-card" data-product-id="m3">
                 <div class="product-image">
                     <img src="images/m3.jpg" alt="Ergonomic Mouse">
                 </div>
@@ -429,7 +324,7 @@
     <div id="product-modal" class="modal">
         <div class="modal-content">
             <span class="modal-close">&times;</span>
-            <div class="modal-product">
+            <div class="modal-product" data-product-id="">
                 <div class="modal-product-image">
                     <img id="modal-product-image" src="" alt="Product Image">
                 </div>
