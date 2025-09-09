@@ -56,28 +56,32 @@
     <!-- PHP include for footer -->
     <?php include('../components/footer.html'); ?>
     
-    <!-- Product Modal placeholder -->
-    <div id="product-modal-placeholder"></div>
+    <!-- PHP include for product modal -->
+    <?php include('../components/product-modal.html'); ?>
     
     <script>
-        // This script initializes the page without loading components via fetch
+        // This script initializes the page with PHP-included components
         document.addEventListener('DOMContentLoaded', () => {
-            // Only fetch the product modal
-            fetch('/ShoppingAPP/src/components/product-modal.html')
-                .then(r => r.text())
-                .then(html => {
-                    const placeholder = document.getElementById('product-modal-placeholder');
-                    if (placeholder) {
-                        placeholder.innerHTML = html;
-                        setupProductModal();
-                    }
-                })
-                .catch(err => console.error("Error loading product modal:", err));
+            // Product modal is already included via PHP
+            if (typeof setupProductModal === 'function') {
+                setupProductModal();
+            }
                 
-            loadProducts();
-            setupStaticProductCards();
-            setupGlobalEventHandlers();
-            updateCartIcon();
+            if (typeof loadProducts === 'function') {
+                loadProducts();
+            }
+            
+            if (typeof setupStaticProductCards === 'function') {
+                setupStaticProductCards();
+            }
+            
+            if (typeof setupGlobalEventHandlers === 'function') {
+                setupGlobalEventHandlers();
+            }
+            
+            if (typeof updateCartIcon === 'function') {
+                updateCartIcon();
+            }
         });
     </script>
 </body>

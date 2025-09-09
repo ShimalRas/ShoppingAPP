@@ -405,7 +405,7 @@ function setupGlobalEventHandlers() {
         }
         
         if (e.target.classList.contains('continue-shopping')) { 
-            window.location.href = 'index.html'; 
+            window.location.href = 'categories.php'; 
         }
         
         if (e.target.classList.contains('checkout-btn')) {
