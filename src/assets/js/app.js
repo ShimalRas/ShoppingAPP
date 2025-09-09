@@ -152,6 +152,7 @@ function createProductCard(p) {
             <p class="product-price">$${p.price.toFixed(2)}</p>
             <button class="btn-add-to-cart" aria-label="Add ${p.name} to cart">Add to Cart</button>
         </div>`;
+    // Only add click event for opening the modal, not for add-to-cart
     card.addEventListener('click', e => { 
         if (!e.target.classList.contains('btn-add-to-cart')) openProductModal(p); 
     });
@@ -194,6 +195,7 @@ function setupStaticProductCards() {
             const image = card.querySelector('.product-image img')?.src;
             return { id, name, description: desc, price, image };
         })();
+        // Only add click event for opening the modal, not for add-to-cart
         card.addEventListener('click', e => { 
             if (!e.target.classList.contains('btn-add-to-cart')) openProductModal(data); 
         });
@@ -395,23 +397,49 @@ function updateQuantity(id, change, absolute = false) {
 
 // ----------------------------- Global Events -----------------------------
 function setupGlobalEventHandlers() {
-    document.addEventListener('click', e => {
-        if (e.target.classList.contains('btn-add-to-cart')) {
-            const card = e.target.closest('.product-card');
-            if (card?.dataset.productId) { 
-                addToCart(card.dataset.productId, 1); 
-                e.stopPropagation(); 
+    // Use a flag to prevent duplicate add-to-cart events
+    window.cartEventHandlersAdded = window.cartEventHandlersAdded || false;
+    
+    if (!window.cartEventHandlersAdded) {
+        document.addEventListener('click', e => {
+            if (e.target.classList.contains('btn-add-to-cart')) {
+                const card = e.target.closest('.product-card');
+                if (card?.dataset.productId) { 
+                    addToCart(card.dataset.productId, 1); 
+                    e.stopPropagation(); 
+                }
             }
-        }
+            
+            if (e.target.classList.contains('continue-shopping')) { 
+                window.location.href = 'categories.php'; 
+            }
+            
+            if (e.target.classList.contains('checkout-btn')) {
+                // Check if the user is logged in
+                if (typeof isUserLoggedIn === 'function' && !isUserLoggedIn()) {
+                    // Show notification that login is required
+                    if (typeof showLoginNotification === 'function') {
+                        showLoginNotification('Please login to proceed to checkout');
+                    } else {
+                        alert('Please login to proceed to checkout');
+                    }
+                    
+                    // Save current page URL to redirect back after login
+                    localStorage.setItem('checkoutRedirect', window.location.href);
+                    
+                    // Redirect to login page
+                    setTimeout(() => {
+                        window.location.href = 'login.php';
+                    }, 1500);
+                } else {
+                    // User is logged in, proceed with checkout
+                    alert('Checkout functionality would be implemented here!');
+                }
+            }
+        });
         
-        if (e.target.classList.contains('continue-shopping')) { 
-            window.location.href = 'categories.php'; 
-        }
-        
-        if (e.target.classList.contains('checkout-btn')) {
-            alert('Checkout functionality would be implemented here!');
-        }
-    });
+        window.cartEventHandlersAdded = true;
+    }
     
     // Add keyboard navigation for modal
     document.addEventListener('keydown', e => {
