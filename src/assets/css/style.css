@@ -1,13 +1,18 @@
-/* Global Styles */
+/* Global CSS for TechGear Shop
+ * Consolidated from Main.css
+ */
+
+/* Variables */
 :root {
-    --primary-color: #ff1a1a; /* Vibrant red */
-    --secondary-color: #b30000; /* Darker red */
-    --dark-color: #121212; /* Dark background */
-    --dark-secondary: #1e1e1e; /* Slightly lighter dark */
-    --light-color: #f4f4f4; /* Light text */
-    --gray-color: #888; /* Gray text */
+    --primary-color: #ff1a1a;      /* Vibrant red */
+    --secondary-color: #b30000;     /* Darker red */
+    --dark-color: #121212;          /* Dark background */
+    --dark-secondary: #1e1e1e;      /* Slightly lighter dark */
+    --light-color: #f4f4f4;         /* Light text */
+    --gray-color: #888;             /* Gray text */
 }
 
+/* Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -34,6 +39,7 @@ img {
     max-width: 100%;
 }
 
+/* Buttons */
 .btn {
     display: inline-block;
     background: var(--primary-color);
@@ -67,7 +73,7 @@ img {
     color: var(--light-color);
 }
 
-/* Header */
+/* Header Styles */
 header {
     display: flex;
     justify-content: space-between;
@@ -157,8 +163,7 @@ nav ul li a.active::after {
 }
 
 /* Hero Section */
-.hero {
-    height: 500px;
+.hero, .category-hero {
     background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://via.placeholder.com/1920x500');
     background-size: cover;
     background-position: center;
@@ -166,7 +171,17 @@ nav ul li a.active::after {
     align-items: center;
     justify-content: center;
     text-align: center;
+}
+
+.hero {
+    height: 500px;
     margin-bottom: 50px;
+}
+
+.category-hero {
+    height: 300px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://via.placeholder.com/1920x300');
+    margin-bottom: 30px;
 }
 
 .hero-content {
@@ -186,13 +201,13 @@ nav ul li a.active::after {
     color: var(--light-color);
 }
 
-/* Featured Products Section */
+/* Products & Categories */
 .featured-products {
     padding: 50px 5%;
     text-align: center;
 }
 
-.featured-products h2 {
+.featured-products h2, .categories h2 {
     font-size: 32px;
     margin-bottom: 40px;
     position: relative;
@@ -200,7 +215,7 @@ nav ul li a.active::after {
     padding-bottom: 10px;
 }
 
-.featured-products h2::after {
+.featured-products h2::after, .categories h2::after {
     content: '';
     position: absolute;
     width: 50%;
@@ -222,6 +237,7 @@ nav ul li a.active::after {
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
 .product-card:hover {
@@ -267,29 +283,22 @@ nav ul li a.active::after {
     margin-bottom: 15px;
 }
 
+/* Limited edition product style */
+.product-card.limited-edition {
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 15px var(--primary-color);
+}
+
+.limited-edition-label {
+    color: var(--primary-color);
+    font-size: 14px;
+}
+
 /* Categories Section */
 .categories {
     padding: 50px 5%;
     background-color: var(--dark-secondary);
     text-align: center;
-}
-
-.categories h2 {
-    font-size: 32px;
-    margin-bottom: 40px;
-    position: relative;
-    display: inline-block;
-    padding-bottom: 10px;
-}
-
-.categories h2::after {
-    content: '';
-    position: absolute;
-    width: 50%;
-    height: 3px;
-    background-color: var(--primary-color);
-    bottom: 0;
-    left: 25%;
 }
 
 .category-grid {
@@ -333,19 +342,7 @@ nav ul li a.active::after {
     margin: 0;
 }
 
-/* Category Page Specific Styles */
-.category-hero {
-    height: 300px;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://via.placeholder.com/1920x300');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-bottom: 30px;
-}
-
+/* Category Page Styles */
 .category-section {
     padding: 40px 5%;
     margin-bottom: 30px;
@@ -692,11 +689,6 @@ footer {
     color: gold;
 }
 
-/* Make product cards clickable */
-.product-card {
-    cursor: pointer;
-}
-
 /* Cart Page Styles */
 .cart-page-container {
     padding: 50px 5%;
@@ -811,6 +803,13 @@ footer {
 .checkout-btn {
     width: 100%;
     margin-top: 20px;
+    text-align: center;
+}
+
+.continue-shopping {
+    background: var(--dark-secondary); 
+    margin-top: 10px;
+    width: 100%;
     text-align: center;
 }
 
@@ -945,5 +944,31 @@ footer {
     .tab-header div {
         padding: 10px;
         font-size: 14px;
+    }
+    
+    .cart-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .cart-item {
+        grid-template-columns: 80px 1fr;
+        grid-template-areas:
+            "image details"
+            "image total";
+    }
+    
+    .cart-item-image {
+        grid-area: image;
+        width: 80px;
+        height: 80px;
+    }
+    
+    .cart-item-details {
+        grid-area: details;
+    }
+    
+    .cart-item-total {
+        grid-area: total;
+        text-align: left;
     }
 }
