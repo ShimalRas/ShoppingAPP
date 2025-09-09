@@ -11,9 +11,7 @@
     <link rel="stylesheet" href="../assets/css/utility.css">
     <link rel="stylesheet" href="../assets/css/user-actions.css">
     <link rel="stylesheet" href="../assets/css/no-outline.css">
-    <link rel="stylesheet" href="../assets/css/login-dropdown.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="../assets/js/auth.js" defer></script>
     <script src="../assets/js/app.js" defer></script>
 </head>
 <body>
