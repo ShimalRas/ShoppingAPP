@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechGear Shop - Embedded Components</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/utility.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="../assets/js/app.js" defer></script>
+</head>
+<body>
+    <!-- Header embedded directly -->
+    <header>
+        <div class="logo"><h1>TechGear</h1></div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="categories.html">Categories <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="categories.html#keyboards">Keyboards</a>
+                        <a href="categories.html#mice">Mice</a>
+                        <a href="categories.html#monitors">Monitors</a>
+                        <a href="categories.html#headphones">Headphones</a>
+                    </div>
+                </li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="cart"><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart (0)</a></div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Premium Tech Products</h2>
+            <p>Find the perfect gear for your setup</p>
+            <button class="btn">Shop Now</button>
+        </div>
+    </section>
+
+    <section class="featured-products">
+        <h2>Featured Products</h2>
+        <div class="product-grid">
+            <!-- Products will be dynamically loaded here -->
+        </div>
+    </section>
+
+    <section class="categories">
+        <h2>Shop by Category</h2>
+        <div class="category-grid">
+            <div class="category-card">
+                <img src="../assets/images/k1.jpg" alt="Keyboards">
+                <h3>Keyboards</h3>
+            </div>
+            <div class="category-card">
+                <img src="../assets/images/m1-cyberpunk.jpg" alt="Mice">
+                <h3>Mice</h3>
+            </div>
+            <div class="category-card">
+                <img src="../assets/images/mn1.jpg" alt="Monitors">
+                <h3>Monitors</h3>
+            </div>
+            <div class="category-card">
+                <img src="../assets/images/k3.jpg" alt="Headphones">
+                <h3>Headphones</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer embedded directly -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>TechGear</h3>
+                <p>Your one-stop shop for premium tech products and accessories.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="categories.html">Products</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Tech Street, Digital City</p>
+                <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+                <p><i class="fas fa-envelope"></i> info@techgear.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 TechGear. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Product Modal placeholder -->
+    <div id="product-modal-placeholder"></div>
+    
+    <script>
+        // This script initializes the page without relying on component loading
+        document.addEventListener('DOMContentLoaded', () => {
+            // Skip loadComponents since we've embedded them directly
+            loadProducts();
+            setupStaticProductCards();
+            setupGlobalEventHandlers();
+            
+            // Update cart icon
+            updateCartIcon();
+        });
+    </script>
+</body>
+</html>

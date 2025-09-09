@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component Test</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Test direct inclusion
+            document.getElementById('direct-include').innerHTML = '<h3>Testing direct include...</h3>';
+            
+            // Test fetch header
+            fetch('./components/header.html')
+                .then(response => {
+                    document.getElementById('fetch-status').textContent = `Header fetch status: ${response.status} ${response.statusText}`;
+                    return response.text();
+                })
+                .then(html => {
+                    document.getElementById('header-test').innerHTML = html;
+                })
+                .catch(error => {
+                    document.getElementById('header-test').innerHTML = `<div style="color:red">Error: ${error.message}</div>`;
+                });
+                
+            // Test fetch footer
+            fetch('./components/footer.html')
+                .then(response => {
+                    document.getElementById('footer-status').textContent = `Footer fetch status: ${response.status} ${response.statusText}`;
+                    return response.text();
+                })
+                .then(html => {
+                    document.getElementById('footer-test').innerHTML = html;
+                })
+                .catch(error => {
+                    document.getElementById('footer-test').innerHTML = `<div style="color:red">Error: ${error.message}</div>`;
+                });
+        });
+    </script>
+</head>
+<body>
+    <h1>Component Test Page</h1>
+    <div id="direct-include"></div>
+    <hr>
+    <h2>Header Test</h2>
+    <div id="fetch-status"></div>
+    <div id="header-test"></div>
+    <hr>
+    <h2>Footer Test</h2>
+    <div id="footer-status"></div>
+    <div id="footer-test"></div>
+</body>
+</html>

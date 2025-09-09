@@ -19,11 +19,10 @@ src/
 │   ├── footer.html        # Shared footer component
 │   ├── header.html        # Shared header component
 │   └── product-modal.html # Product detail modal component
-├── pages/
-│   ├── cart.html          # Shopping cart page
-│   ├── categories.html    # Product categories page
-│   └── index.html         # Home page
-└── index.html             # Root redirect file
+└── pages/
+    ├── cart.html          # Shopping cart page
+    ├── categories.html    # Product categories page
+    └── index.html         # Home page (main application page)
 ```
 
 ## Features

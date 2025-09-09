@@ -1,4 +1,4 @@
-// Combined application logic (previously main.js, cart.js, products.js)
+// Combined application logic for TechGear Shop
 // -------------------------------- Products Data --------------------------------
 const products = [
     { id: 'k1', name: 'Mechanical Keyboard', description: 'RGB Backlit Mechanical Gaming Keyboard with Blue Switches', price: 89.99, image: '../assets/images/k1.jpg', category: 'keyboards', featured: true },
@@ -25,40 +25,39 @@ const products = [
 
 // ----------------------------- Components Loader -----------------------------
 function loadComponents() {
-    // Load header
-    fetch('../components/header.html')
-        .then(r => r.text())
+    console.log("Loading components...");
+    
+    // Highlight active navigation link (for the embedded header)
+    const current = window.location.pathname.split('/').pop();
+    document.querySelectorAll('nav ul li a').forEach(a => {
+        const href = a.getAttribute('href');
+        const hrefPage = href ? href.split('/').pop() : '';
+        a.classList.toggle('active', hrefPage === current);
+    });
+    updateCartIcon();
+    
+    // Load product modal only
+    fetch('/ShoppingAPP/src/components/product-modal.html')
+        .then(r => {
+            if (!r.ok) throw new Error(`Failed to load product modal: ${r.status} ${r.statusText}`);
+            return r.text();
+        })
         .then(html => {
-            const placeholder = document.getElementById('header-placeholder');
-            if (!placeholder) return;
-            placeholder.innerHTML = html;
-            // Active link highlight
-            const current = window.location.pathname.split('/').pop();
-            document.querySelectorAll('nav ul li a').forEach(a => {
-                const href = a.getAttribute('href');
-                const hrefPage = href ? href.split('/').pop() : '';
-                a.classList.toggle('active', hrefPage === current);
-            });
-            updateCartIcon();
-        });
-        
-    // Load footer
-    fetch('../components/footer.html')
-        .then(r => r.text())
-        .then(html => {
-            const placeholder = document.getElementById('footer-placeholder');
-            if (!placeholder) return;
-            placeholder.innerHTML = html;
-        });
-
-    // Load product modal
-    fetch('../components/product-modal.html')
-        .then(r => r.text())
-        .then(html => {
+            console.log("Product modal loaded successfully");
             const placeholder = document.getElementById('product-modal-placeholder');
-            if (!placeholder) return;
+            if (!placeholder) {
+                console.error("Product modal placeholder not found");
+                return;
+            }
             placeholder.innerHTML = html;
             setupProductModal();
+        })
+        .catch(err => {
+            console.error("Error loading product modal:", err);
+            const placeholder = document.getElementById('product-modal-placeholder');
+            if (placeholder) {
+                placeholder.innerHTML = `<div style="color:red;padding:20px;">Error loading product modal: ${err.message}</div>`;
+            }
         });
 }
 
@@ -66,9 +65,11 @@ function loadComponents() {
 function setupProductModal() {
     const modal = document.getElementById('product-modal');
     if (!modal) return;
+    
     const modalClose = modal.querySelector('.modal-close');
     modalClose?.addEventListener('click', () => { closeModal(); });
     window.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    window.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
     // Tabs
     const tabHeader = modal.querySelectorAll('.tab-header div');
@@ -84,8 +85,18 @@ function setupProductModal() {
     const plus = modal.querySelector('.quantity-btn.plus');
     const minus = modal.querySelector('.quantity-btn.minus');
     const input = modal.querySelector('.quantity-input');
-    plus?.addEventListener('click', () => { if (input.value < input.max) input.value = Number(input.value) + 1; });
-    minus?.addEventListener('click', () => { if (input.value > input.min) input.value = Number(input.value) - 1; });
+    plus?.addEventListener('click', () => { 
+        if (input.value < input.max) input.value = Number(input.value) + 1; 
+    });
+    minus?.addEventListener('click', () => { 
+        if (input.value > input.min) input.value = Number(input.value) - 1; 
+    });
+
+    // Prevent non-numeric input in quantity field
+    input?.addEventListener('input', () => {
+        if (isNaN(input.value) || input.value < 1) input.value = 1;
+        if (input.value > 10) input.value = 10;
+    });
 
     modal.querySelector('.modal-add-to-cart')?.addEventListener('click', () => {
         const pid = modal.querySelector('.modal-product')?.dataset.productId;
@@ -100,12 +111,19 @@ function closeModal() {
     if (modal) {
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
+        document.body.style.paddingRight = ''; // Reset padding for scrollbar
     }
 }
 
 function openProductModal(product) {
     const modal = document.getElementById('product-modal');
     if (!modal) return;
+    
+    // Prevent background scrolling when modal is open
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    
     const wrap = modal.querySelector('.modal-product');
     wrap.dataset.productId = product.id;
     document.getElementById('modal-product-image').src = product.image;
@@ -115,7 +133,9 @@ function openProductModal(product) {
     const qty = modal.querySelector('.quantity-input');
     if (qty) qty.value = 1;
     modal.style.display = 'block';
-    document.body.style.overflow = 'hidden';
+    
+    // Set focus to close button for accessibility
+    setTimeout(() => modal.querySelector('.modal-close')?.focus(), 100);
 }
 
 // ----------------------------- Product Cards -----------------------------
@@ -125,14 +145,16 @@ function createProductCard(p) {
     card.dataset.productId = p.id;
     if (p.limited) { card.classList.add('limited-edition'); }
     card.innerHTML = `
-        <div class="product-image"><img src="${p.image}" alt="${p.name}"></div>
+        <div class="product-image"><img src="${p.image}" alt="${p.name}" loading="lazy"></div>
         <div class="product-info">
             <h3>${p.name} ${p.limited ? '<span class="limited-edition-label">(Limited Edition)</span>' : ''}</h3>
             <p class="product-description">${p.description}</p>
             <p class="product-price">$${p.price.toFixed(2)}</p>
-            <button class="btn-add-to-cart">Add to Cart</button>
+            <button class="btn-add-to-cart" aria-label="Add ${p.name} to cart">Add to Cart</button>
         </div>`;
-    card.addEventListener('click', e => { if (!e.target.classList.contains('btn-add-to-cart')) openProductModal(p); });
+    card.addEventListener('click', e => { 
+        if (!e.target.classList.contains('btn-add-to-cart')) openProductModal(p); 
+    });
     return card;
 }
 
@@ -144,10 +166,18 @@ function loadProducts() {
         monitors: '#monitors .product-grid',
         headphones: '#headphones .product-grid'
     };
-    if (document.querySelector(map.featured)) products.filter(p => p.featured).forEach(p => document.querySelector(map.featured).appendChild(createProductCard(p)));
+    
+    if (document.querySelector(map.featured)) {
+        products.filter(p => p.featured).forEach(p => {
+            document.querySelector(map.featured).appendChild(createProductCard(p));
+        });
+    }
+    
     ['keyboards','mice','monitors','headphones'].forEach(cat => {
         const el = document.querySelector(map[cat]);
-        if (el) products.filter(p => p.category === cat).forEach(p => el.appendChild(createProductCard(p)));
+        if (el) {
+            products.filter(p => p.category === cat).forEach(p => el.appendChild(createProductCard(p)));
+        }
     });
 }
 
@@ -164,99 +194,296 @@ function setupStaticProductCards() {
             const image = card.querySelector('.product-image img')?.src;
             return { id, name, description: desc, price, image };
         })();
-        card.addEventListener('click', e => { if (!e.target.classList.contains('btn-add-to-cart')) openProductModal(data); });
+        card.addEventListener('click', e => { 
+            if (!e.target.classList.contains('btn-add-to-cart')) openProductModal(data); 
+        });
         card.setAttribute('data-listeners-added', 'true');
     });
 }
 
 // ----------------------------- Cart Logic -----------------------------
-function getCart() { return JSON.parse(localStorage.getItem('cart')) || []; }
-function saveCart(c) { localStorage.setItem('cart', JSON.stringify(c)); updateCartIcon(); }
+function getCart() { 
+    try {
+        return JSON.parse(localStorage.getItem('cart')) || []; 
+    } catch (e) {
+        console.error("Error reading cart from localStorage:", e);
+        return [];
+    }
+}
+
+function saveCart(c) { 
+    try {
+        localStorage.setItem('cart', JSON.stringify(c)); 
+        updateCartIcon();
+        if (document.body.classList.contains('cart-page')) {
+            renderCartPage();
+        }
+    } catch (e) {
+        console.error("Error saving cart to localStorage:", e);
+        showNotification("Error saving cart data", "error");
+    }
+}
+
 function addToCart(id, qty=1) {
     const c = getCart();
     const p = products.find(p => p.id === id);
     if (!p) return console.error('Product not found');
+    
     const existing = c.find(i => i.id === id);
-    existing ? existing.quantity += qty : c.push({ id, name: p.name, price: p.price, image: p.image, quantity: qty });
-    saveCart(c); showNotification(`${p.name} added to cart.`);
+    if (existing) {
+        existing.quantity += qty;
+    } else {
+        c.push({ 
+            id, 
+            name: p.name, 
+            price: p.price, 
+            image: p.image, 
+            quantity: qty 
+        });
+    }
+    
+    saveCart(c); 
+    showNotification(`${p.name} added to cart.`);
 }
+
 function updateCartIcon() {
-    const count = getCart().reduce((s,i)=>s+i.quantity,0);
-    const link = document.querySelector('.cart a');
-    if (link) link.innerHTML = `<i class="fas fa-shopping-cart"></i> Cart (${count})`;
+    const count = getCart().reduce((s, i) => s + i.quantity, 0);
+    const cartLinks = document.querySelectorAll('.cart a');
+    cartLinks.forEach(link => {
+        link.innerHTML = `<i class="fas fa-shopping-cart" aria-hidden="true"></i> Cart (${count})`;
+    });
 }
-function showNotification(msg) {
+
+function showNotification(msg, type = "success") {
     let container = document.getElementById('notification-container');
-    if (!container) { container = document.createElement('div'); container.id='notification-container'; document.body.appendChild(container);}    
+    if (!container) { 
+        container = document.createElement('div'); 
+        container.id = 'notification-container'; 
+        document.body.appendChild(container);
+    }    
+    
     const note = document.createElement('div');
-    note.className='notification';
-    note.innerHTML=`<i class="fas fa-check-circle"></i><p>${msg}</p>`;
+    note.className = `notification ${type}`;
+    
+    const icon = type === "error" ? "fa-exclamation-circle" : "fa-check-circle";
+    note.innerHTML = `<i class="fas ${icon}"></i><p>${msg}</p>`;
     container.appendChild(note);
-    setTimeout(()=>{ note.classList.add('fade-out'); setTimeout(()=> note.remove(),500); },3000);
+    
+    setTimeout(() => { 
+        note.classList.add('fade-out'); 
+        setTimeout(() => note.remove(), 500); 
+    }, 3000);
 }
 
 // Cart page specific
 function renderCartPage() {
     if (!document.body.classList.contains('cart-page')) return;
+    
     const cart = getCart();
     const list = document.querySelector('.cart-items-list');
     const empty = document.querySelector('.empty-cart-message');
     const layout = document.querySelector('.cart-layout');
+    
     if (!list) return;
+    
     if (cart.length === 0) { 
         if (empty) empty.classList.add('active'); 
-        if (layout) layout.style.display='none'; 
+        if (layout) layout.style.display = 'none'; 
         return; 
     }
+    
     if (empty) empty.classList.remove('active'); 
-    if (layout) layout.style.display='grid';
-    list.innerHTML='';
+    if (layout) layout.style.display = 'grid';
+    
+    list.innerHTML = '';
     cart.forEach(item => {
         const el = document.createElement('div');
-        el.className='cart-item';
-        el.innerHTML=`<div class="cart-item-image"><img src="${item.image}" alt="${item.name}"></div>
-            <div class="cart-item-details"><h3>${item.name}</h3><p class="cart-item-price">$${item.price.toFixed(2)}</p>
-            <div class="quantity-selector"><button class="quantity-btn minus" data-id="${item.id}">-</button>
-            <input type="number" value="${item.quantity}" min="1" class="quantity-input" data-id="${item.id}">
-            <button class="quantity-btn plus" data-id="${item.id}">+</button></div></div>
-            <div class="cart-item-total"><p>$${(item.price*item.quantity).toFixed(2)}</p><button class="remove-item-btn" data-id="${item.id}">&times;</button></div>`;
+        el.className = 'cart-item';
+        el.innerHTML = `
+            <div class="cart-item-image">
+                <img src="${item.image}" alt="${item.name}" loading="lazy">
+            </div>
+            <div class="cart-item-details">
+                <h3>${item.name}</h3>
+                <p class="cart-item-price">$${item.price.toFixed(2)}</p>
+                <div class="quantity-selector">
+                    <button class="quantity-btn minus" data-id="${item.id}" aria-label="Decrease quantity">-</button>
+                    <input type="number" value="${item.quantity}" min="1" class="quantity-input" data-id="${item.id}" aria-label="Quantity">
+                    <button class="quantity-btn plus" data-id="${item.id}" aria-label="Increase quantity">+</button>
+                </div>
+            </div>
+            <div class="cart-item-total">
+                <p>$${(item.price * item.quantity).toFixed(2)}</p>
+                <button class="remove-item-btn" data-id="${item.id}" aria-label="Remove ${item.name} from cart">&times;</button>
+            </div>`;
         list.appendChild(el);
     });
+    
     updateCartSummary(cart);
     addCartEventListeners();
 }
+
 function updateCartSummary(cart) {
-    const subtotal = cart.reduce((s,i)=>s+i.price*i.quantity,0);
-    const tax = subtotal*0.07; const total=subtotal+tax;
-    const set=(id,val)=>{ const el=document.getElementById(id); if (el) el.textContent=val; };
+    const subtotal = cart.reduce((s, i) => s + (i.price * i.quantity), 0);
+    const tax = subtotal * 0.07; 
+    const total = subtotal + tax;
+    
+    const set = (id, val) => { 
+        const el = document.getElementById(id); 
+        if (el) el.textContent = val; 
+    };
+    
     set('summary-subtotal', `$${subtotal.toFixed(2)}`);
     set('summary-tax', `$${tax.toFixed(2)}`);
     set('summary-total', `$${total.toFixed(2)}`);
 }
+
 function addCartEventListeners() {
-    const list=document.querySelector('.cart-items-list'); if(!list) return;
-    list.onclick=e=>{ const id=e.target.dataset.id; if(e.target.classList.contains('remove-item-btn')) removeFromCart(id); if(e.target.classList.contains('plus')) updateQuantity(id,1); if(e.target.classList.contains('minus')) updateQuantity(id,-1); };
-    list.onchange=e=>{ const id=e.target.dataset.id; if(e.target.classList.contains('quantity-input')) { const q=parseInt(e.target.value); if(q>0) updateQuantity(id,q,true); else removeFromCart(id);} };
+    const list = document.querySelector('.cart-items-list'); 
+    if (!list) return;
+    
+    list.onclick = e => { 
+        const id = e.target.dataset.id; 
+        if (!id) return;
+        
+        if (e.target.classList.contains('remove-item-btn')) {
+            removeFromCart(id);
+        } else if (e.target.classList.contains('plus')) {
+            updateQuantity(id, 1);
+        } else if (e.target.classList.contains('minus')) {
+            updateQuantity(id, -1);
+        }
+    };
+    
+    list.onchange = e => { 
+        const id = e.target.dataset.id; 
+        if (!id) return;
+        
+        if (e.target.classList.contains('quantity-input')) {
+            const q = parseInt(e.target.value);
+            if (q > 0) {
+                updateQuantity(id, q, true);
+            } else {
+                removeFromCart(id);
+            }
+        }
+    };
 }
-function removeFromCart(id){ let c=getCart().filter(i=>i.id!==id); saveCart(c); renderCartPage(); }
-function updateQuantity(id,change,absolute=false){ const c=getCart(); const item=c.find(i=>i.id===id); if(!item)return; absolute? item.quantity=change: item.quantity+=change; if(item.quantity<=0) return removeFromCart(id); saveCart(c); renderCartPage(); }
+
+function removeFromCart(id) { 
+    const c = getCart().filter(i => i.id !== id); 
+    saveCart(c); 
+}
+
+function updateQuantity(id, change, absolute = false) { 
+    const c = getCart(); 
+    const item = c.find(i => i.id === id); 
+    if (!item) return;
+    
+    if (absolute) {
+        item.quantity = change;
+    } else {
+        item.quantity += change;
+    }
+    
+    if (item.quantity <= 0) {
+        removeFromCart(id);
+    } else {
+        saveCart(c);
+    }
+}
 
 // ----------------------------- Global Events -----------------------------
 function setupGlobalEventHandlers() {
     document.addEventListener('click', e => {
         if (e.target.classList.contains('btn-add-to-cart')) {
             const card = e.target.closest('.product-card');
-            if (card?.dataset.productId) { addToCart(card.dataset.productId,1); e.stopPropagation(); }
+            if (card?.dataset.productId) { 
+                addToCart(card.dataset.productId, 1); 
+                e.stopPropagation(); 
+            }
         }
-        if (e.target.classList.contains('continue-shopping')) { window.location.href = 'index.html'; }
+        
+        if (e.target.classList.contains('continue-shopping')) { 
+            window.location.href = 'index.html'; 
+        }
+        
+        if (e.target.classList.contains('checkout-btn')) {
+            alert('Checkout functionality would be implemented here!');
+        }
+    });
+    
+    // Add keyboard navigation for modal
+    document.addEventListener('keydown', e => {
+        const modal = document.getElementById('product-modal');
+        if (modal && modal.style.display === 'block') {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+            
+            // Trap focus inside modal
+            if (e.key === 'Tab') {
+                const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+                
+                if (e.shiftKey) {
+                    if (document.activeElement === firstElement) {
+                        lastElement.focus();
+                        e.preventDefault();
+                    }
+                } else {
+                    if (document.activeElement === lastElement) {
+                        firstElement.focus();
+                        e.preventDefault();
+                    }
+                }
+            }
+        }
     });
 }
 
 // ----------------------------- Init -----------------------------
 document.addEventListener('DOMContentLoaded', () => {
-    loadComponents();
+    // Check if we're on a page with embedded components
+    const hasEmbeddedHeader = document.querySelector('header:not(#product-modal header)');
+    
+    if (!hasEmbeddedHeader) {
+        loadComponents();
+    } else {
+        // Update cart icon for pages with embedded header
+        updateCartIcon();
+    }
+    
     loadProducts();
     setupStaticProductCards();
     setupGlobalEventHandlers();
     renderCartPage();
+    
+    // Add a small delay to ensure all elements are properly initialized
+    setTimeout(() => {
+        const loadingIndicator = document.getElementById('loading-indicator');
+        if (loadingIndicator) {
+            loadingIndicator.style.display = 'none';
+        }
+    }, 300);
 });
+
+// Add a simple loading indicator at the very beginning
+document.write(`
+    <div id="loading-indicator" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--dark-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.3s;
+    ">
+        <div style="color: var(--primary-color); font-size: 24px;">Loading TechGear...</div>
+    </div>
+`);
