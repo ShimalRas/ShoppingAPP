@@ -1,0 +1,47 @@
+/* CSS to center the product grid on the Categories page */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(250px, 300px));
+    gap: 30px;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 1000px;
+}
+
+/* Center category headings and descriptions */
+.category-section h2 {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.category-section h2::after {
+    left: 25%;
+    width: 50%;
+}
+
+.category-description {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Add more space between categories */
+.category-section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 992px) {
+    .product-grid {
+        grid-template-columns: repeat(2, minmax(250px, 300px));
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .product-grid {
+        grid-template-columns: minmax(250px, 300px);
+    }
+}

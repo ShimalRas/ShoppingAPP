@@ -150,6 +150,11 @@ function loadProducts() {
     const monitorsGrid = document.querySelector('#monitors .product-grid');
     const headphonesGrid = document.querySelector('#headphones .product-grid');
 
+    // Don't add products on Categories.html page where they're already hardcoded
+    if (window.location.pathname.includes('Categories.html')) {
+        return;
+    }
+
     if (featuredProductsGrid) {
         const featured = products.filter(p => p.featured);
         featured.forEach(product => {
