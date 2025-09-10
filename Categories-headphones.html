@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechGear - Headphones Collection</title>
+    <link rel="stylesheet" href="Main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="products.js" defer></script>
+    <script src="cart.js" defer></script>
+    <script src="main.js" defer></script>
+</head>
+<body>
+    <!-- Header placeholder -->
+    <div id="header-placeholder"></div>
+
+    <section class="category-hero">
+        <div class="hero-content">
+            <h2>Headphones Collection</h2>
+            <p>Immerse yourself in superior audio with our premium headsets and headphones</p>
+        </div>
+    </section>
+
+    <!-- Headphones Category -->
+    <section id="headphones" class="category-section">
+        <h2>All Headphones</h2>
+        <div class="category-description">
+            <p>Explore our complete range of gaming headsets, professional studio headphones, and noise-cancelling models designed for immersive audio experiences.</p>
+        </div>
+        <div class="product-grid">
+            <div class="product-card" data-product-id="h1">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/300x200" alt="Wireless Gaming Headset">
+                </div>
+                <div class="product-info">
+                    <h3>Wireless Gaming Headset</h3>
+                    <p class="product-description">Low-latency Wireless Gaming Headset with 7.1 Surround Sound</p>
+                    <p class="product-price">$129.99</p>
+                    <button class="btn-add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card" data-product-id="h2">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/300x200" alt="Studio Headphones">
+                </div>
+                <div class="product-info">
+                    <h3>Studio Headphones</h3>
+                    <p class="product-description">Professional Studio Monitoring Headphones with Flat Response</p>
+                    <p class="product-price">$149.99</p>
+                    <button class="btn-add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card" data-product-id="h3">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/300x200" alt="Noise Cancelling Headphones">
+                </div>
+                <div class="product-info">
+                    <h3>Noise Cancelling Headphones</h3>
+                    <p class="product-description">Wireless Noise Cancelling Headphones with 30-hour Battery Life</p>
+                    <p class="product-price">$199.99</p>
+                    <button class="btn-add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card" data-product-id="h4">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/300x200" alt="Budget Gaming Headset">
+                </div>
+                <div class="product-info">
+                    <h3>Budget Gaming Headset</h3>
+                    <p class="product-description">Affordable Gaming Headset with RGB Lighting and Microphone</p>
+                    <p class="product-price">$49.99</p>
+                    <button class="btn-add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>TechGear</h3>
+                <p>Your one-stop shop for premium tech products and accessories.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="Main.html">Home</a></li>
+                    <li><a href="Categories.html">Products</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Tech Street, Digital City</p>
+                <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+                <p><i class="fas fa-envelope"></i> info@techgear.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 TechGear. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-product" data-product-id="">
+                <div class="modal-product-image">
+                    <img id="modal-product-image" src="" alt="Product Image">
+                </div>
+                <div class="modal-product-details">
+                    <h2 id="modal-product-name"></h2>
+                    <p id="modal-product-description" class="modal-description"></p>
+                    <p id="modal-product-price" class="modal-price"></p>
+                    
+                    <div class="product-specs">
+                        <h3>Specifications</h3>
+                        <ul>
+                            <li><strong>Brand:</strong> <span>TechGear</span></li>
+                            <li><strong>Model:</strong> <span>Premium Series</span></li>
+                            <li><strong>Warranty:</strong> <span>2 Years</span></li>
+                            <li><strong>Shipping:</strong> <span>Free</span></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="product-actions">
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus">-</button>
+                            <input type="number" value="1" min="1" max="10" class="quantity-input">
+                            <button class="quantity-btn plus">+</button>
+                        </div>
+                        <button class="btn modal-add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-additional-info">
+                <div class="tabs">
+                    <div class="tab-header">
+                        <div class="active">Description</div>
+                        <div>Features</div>
+                        <div>Reviews</div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-body active">
+                            <p>Our headphones are engineered to deliver exceptional audio quality for gaming, music production, or immersive entertainment. With premium drivers and comfortable designs, these headphones provide the perfect audio experience for any situation.</p>
+                            <p>From surround sound gaming headsets to studio-grade monitoring headphones, our range ensures you'll hear every detail with perfect clarity.</p>
+                        </div>
+                        <div class="tab-body">
+                            <ul>
+                                <li>High-fidelity audio drivers for exceptional sound quality</li>
+                                <li>Memory foam ear cushions for extended comfort</li>
+                                <li>Active noise cancellation technology (select models)</li>
+                                <li>Detachable boom microphones with noise filtering</li>
+                                <li>Wireless options with long battery life</li>
+                                <li>Multi-platform compatibility (PC, console, mobile)</li>
+                            </ul>
+                        </div>
+                        <div class="tab-body">
+                            <div class="review">
+                                <div class="review-header">
+                                    <span class="reviewer">Jamie K.</span>
+                                    <div class="stars">★★★★★</div>
+                                </div>
+                                <p>These headphones have completely changed my gaming experience! The surround sound is incredible - I can hear exactly where enemies are coming from.</p>
+                            </div>
+                            <div class="review">
+                                <div class="review-header">
+                                    <span class="reviewer">Robin M.</span>
+                                    <div class="stars">★★★★★</div>
+                                </div>
+                                <p>Perfect for my music production work. The flat response provides accurate monitoring, and they're comfortable enough to wear during long studio sessions.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

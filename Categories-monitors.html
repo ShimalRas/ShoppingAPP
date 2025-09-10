@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechGear - Monitors Collection</title>
+    <link rel="stylesheet" href="Main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="products.js" defer></script>
+    <script src="cart.js" defer></script>
+    <script src="main.js" defer></script>
+</head>
+<body>
+    <!-- Header placeholder -->
+    <div id="header-placeholder"></div>
+
+    <section class="category-hero">
+        <div class="hero-content">
+            <h2>Monitors Collection</h2>
+            <p>Elevate your visual experience with our high-performance display technologies</p>
+        </div>
+    </section>
+
+    <!-- Monitors Category -->
+    <section id="monitors" class="category-section">
+        <h2>All Monitors</h2>
+        <div class="category-description">
+            <p>Explore our complete range of premium gaming and professional monitors, featuring high refresh rates, exceptional color accuracy, and stunning resolutions.</p>
+        </div>
+        <div class="product-grid">
+            <div class="product-card" data-product-id="mn1">
+                <div class="product-image">
+                    <img src="images/mn1.jpg" alt="Gaming Monitor">
+                </div>
+                <div class="product-info">
+                    <h3>144Hz Gaming Monitor</h3>
+                    <p class="product-description">27-inch 1440p 144Hz IPS Gaming Monitor with 1ms Response Time</p>
+                    <p class="product-price">$299.99</p>
+                    <button class="btn-add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card" data-product-id="mn2">
+                <div class="product-image">
+                    <img src="images/mn2.jpg" alt="Ultrawide Monitor">
+                </div>
+                <div class="product-info">
+                    <h3>Ultrawide Monitor</h3>
+                    <p class="product-description">34-inch Curved Ultrawide Monitor with 21:9 Aspect Ratio</p>
+                    <p class="product-price">$449.99</p>
+                    <button class="btn-add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card" data-product-id="mn3">
+                <div class="product-image">
+                    <img src="images/mn3.jpg" alt="4K Monitor">
+                </div>
+                <div class="product-info">
+                    <h3>4K Professional Monitor</h3>
+                    <p class="product-description">32-inch 4K Professional Monitor with 99% Adobe RGB Coverage</p>
+                    <p class="product-price">$599.99</p>
+                    <button class="btn-add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card" data-product-id="mn4">
+                <div class="product-image">
+                    <img src="images/mn4.jpg" alt="240Hz Monitor">
+                </div>
+                <div class="product-info">
+                    <h3>240Hz Esports Monitor</h3>
+                    <p class="product-description">24.5-inch 1080p 240Hz TN Monitor for Competitive Gaming</p>
+                    <p class="product-price">$349.99</p>
+                    <button class="btn-add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card" data-product-id="mn5">
+                <div class="product-image">
+                    <img src="images/mn5.jpg" alt="Budget Monitor">
+                </div>
+                <div class="product-info">
+                    <h3>Budget Gaming Monitor</h3>
+                    <p class="product-description">24-inch 1080p 75Hz Monitor with FreeSync Technology</p>
+                    <p class="product-price">$179.99</p>
+                    <button class="btn-add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>TechGear</h3>
+                <p>Your one-stop shop for premium tech products and accessories.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="Main.html">Home</a></li>
+                    <li><a href="Categories.html">Products</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Tech Street, Digital City</p>
+                <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+                <p><i class="fas fa-envelope"></i> info@techgear.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 TechGear. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-product" data-product-id="">
+                <div class="modal-product-image">
+                    <img id="modal-product-image" src="" alt="Product Image">
+                </div>
+                <div class="modal-product-details">
+                    <h2 id="modal-product-name"></h2>
+                    <p id="modal-product-description" class="modal-description"></p>
+                    <p id="modal-product-price" class="modal-price"></p>
+                    
+                    <div class="product-specs">
+                        <h3>Specifications</h3>
+                        <ul>
+                            <li><strong>Brand:</strong> <span>TechGear</span></li>
+                            <li><strong>Model:</strong> <span>Premium Series</span></li>
+                            <li><strong>Warranty:</strong> <span>2 Years</span></li>
+                            <li><strong>Shipping:</strong> <span>Free</span></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="product-actions">
+                        <div class="quantity-selector">
+                            <button class="quantity-btn minus">-</button>
+                            <input type="number" value="1" min="1" max="10" class="quantity-input">
+                            <button class="quantity-btn plus">+</button>
+                        </div>
+                        <button class="btn modal-add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-additional-info">
+                <div class="tabs">
+                    <div class="tab-header">
+                        <div class="active">Description</div>
+                        <div>Features</div>
+                        <div>Reviews</div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-body active">
+                            <p>Our monitors are designed to provide exceptional visual performance whether you're gaming, creating content, or working on professional projects. With cutting-edge display technologies and premium build quality, these monitors deliver stunning visuals that elevate your viewing experience.</p>
+                            <p>From ultra-fast gaming displays to color-accurate professional monitors, we have the perfect screen for your needs.</p>
+                        </div>
+                        <div class="tab-body">
+                            <ul>
+                                <li>High refresh rates for smooth motion (up to 240Hz)</li>
+                                <li>IPS, TN, and VA panel options for different use cases</li>
+                                <li>Adaptive sync technologies (G-Sync/FreeSync compatible)</li>
+                                <li>High color accuracy with wide gamut coverage</li>
+                                <li>Ergonomic stands with height, tilt, and swivel adjustments</li>
+                                <li>Multiple connectivity options including DisplayPort and HDMI</li>
+                            </ul>
+                        </div>
+                        <div class="tab-body">
+                            <div class="review">
+                                <div class="review-header">
+                                    <span class="reviewer">Michael G.</span>
+                                    <div class="stars">★★★★★</div>
+                                </div>
+                                <p>Amazing monitor for both gaming and creative work! The colors are vibrant and accurate, and the high refresh rate makes gaming incredibly smooth.</p>
+                            </div>
+                            <div class="review">
+                                <div class="review-header">
+                                    <span class="reviewer">Dana L.</span>
+                                    <div class="stars">★★★★★</div>
+                                </div>
+                                <p>The ultrawide monitor completely transformed my productivity setup. Having this much screen real estate has made multitasking so much easier.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
